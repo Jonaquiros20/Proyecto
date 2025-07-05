@@ -1,5 +1,18 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
-    // Mensaje de bienvenida solo una vez por sesión
+﻿// Ocultar loader al cargar
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader-wrapper");
+    if (loader) {
+        loader.classList.add("fade-out");
+
+        // Lo elimina del DOM después de la transición
+        setTimeout(() => {
+            loader.remove();
+        }, 500);
+    }
+});
+
+// Mensaje de bienvenida
+document.addEventListener("DOMContentLoaded", function () {
     if (!sessionStorage.getItem('bienvenidaMostrada')) {
         Swal.fire({
             toast: true,
@@ -13,7 +26,7 @@
         sessionStorage.setItem('bienvenidaMostrada', 'true');
     }
 
-    // Advertencia por conexión lenta
+    // Alerta de conexión lenta
     if (navigator.connection && navigator.connection.downlink < 0.8) {
         Swal.fire({
             icon: 'question',
@@ -23,25 +36,13 @@
         });
     }
 
-    // Inicia actualización de fecha y hora en navbar
     actualizarFechaHoraNavbar();
     setInterval(actualizarFechaHoraNavbar, 1000);
 });
 
-// Loader
-window.addEventListener("load", () => {
-    const loader = document.getElementById("loader-wrapper");
-    if (loader) {
-        setTimeout(() => {
-            loader.classList.add("fade-out");
-        }, 300);
-    }
-});
-
-// Mostrar fecha y hora detallada con SweetAlert2
+// Fecha y hora detallada
 function mostrarFechaHoraCompleta() {
     const ahora = new Date();
-
     const opcionesLargas = {
         weekday: 'long',
         year: 'numeric',
@@ -52,7 +53,6 @@ function mostrarFechaHoraCompleta() {
         second: '2-digit',
         timeZoneName: 'short'
     };
-
     const detalle = ahora.toLocaleString('es-CR', opcionesLargas);
 
     Swal.fire({
@@ -63,7 +63,7 @@ function mostrarFechaHoraCompleta() {
     });
 }
 
-// Mostrar hora y fecha resumen en navbar
+// Fecha y hora resumen en navbar
 function actualizarFechaHoraNavbar() {
     const horaTexto = document.getElementById('horaTextoNavbar');
     if (!horaTexto) return;
@@ -76,7 +76,7 @@ function actualizarFechaHoraNavbar() {
     horaTexto.textContent = `${fecha} | ${hora}`;
 }
 
-// Confirmación reutilizable
+// Confirmación con callback
 function confirmarAccion(titulo, texto, icono, callback) {
     Swal.fire({
         title: titulo,

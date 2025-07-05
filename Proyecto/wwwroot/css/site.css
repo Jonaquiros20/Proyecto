@@ -1,10 +1,11 @@
-html, body {
+﻿html, body {
     background-color: #f1f3f5;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100%;
     color: #212529;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -18,6 +19,7 @@ h1, h2, h3, h4, h5 {
 
 .navbar {
     border-bottom: 1px solid #ced4da;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navbar-brand {
@@ -39,7 +41,6 @@ h1, h2, h3, h4, h5 {
     border-radius: 0.4rem;
 }
 
-/* Loader */
 #loader-wrapper {
     position: fixed;
     top: 0;
@@ -66,7 +67,10 @@ h1, h2, h3, h4, h5 {
     visibility: hidden;
 }
 
-/* Tarjetas */
+/* ====================================
+   Tarjetas y diseño general
+==================================== */
+
 .card {
     background-color: #ffffff;
     border-radius: 0.75rem;
@@ -87,14 +91,37 @@ h1, h2, h3, h4, h5 {
     color: #495057;
 }
 
+/* Tarjeta de cita */
+.cita-card {
+    border-left: 5px solid #0d6efd;
+    padding-right: 0.5rem;
+}
+
+    .cita-card .badge {
+        font-size: 0.85rem;
+        padding: 0.35em 0.6em;
+        border-radius: 0.5rem;
+    }
+
+/* Botones */
 .btn {
     border-radius: 0.5rem;
     font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
     .btn:focus,
     .btn:active:focus {
         box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #0d6efd;
+    }
+
+input, select, textarea {
+    border-radius: 0.4rem !important;
+}
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
     }
 
 main {
@@ -106,13 +133,57 @@ footer {
     text-align: center;
     padding: 1rem 0;
     color: #495057;
+    border-top: 1px solid #ced4da;
 }
 
-input, select, textarea {
-    border-radius: 0.4rem !important;
+/* ===============================
+   🌙 Modo Oscuro
+================================== */
+body.modo-oscuro {
+    background-color: #212529 !important;
+    color: #f8f9fa !important;
 }
 
-    input:focus, select:focus, textarea:focus {
-        border-color: #0d6efd;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    body.modo-oscuro .card {
+        background-color: #343a40 !important;
+        color: #f8f9fa !important;
+        border: 1px solid #495057;
     }
+
+    body.modo-oscuro .card-title,
+    body.modo-oscuro .card-text {
+        color: #f8f9fa !important;
+    }
+
+    body.modo-oscuro .btn {
+        border-color: #f8f9fa;
+    }
+
+        body.modo-oscuro .btn:hover {
+            opacity: 0.9;
+        }
+
+    body.modo-oscuro .navbar,
+    body.modo-oscuro footer {
+        background-color: #343a40 !important;
+        color: #f8f9fa !important;
+        border-color: #495057;
+    }
+
+    body.modo-oscuro .navbar-brand,
+    body.modo-oscuro .nav-link {
+        color: #f8f9fa !important;
+    }
+
+    body.modo-oscuro input,
+    body.modo-oscuro select,
+    body.modo-oscuro textarea {
+        background-color: #495057;
+        color: #f8f9fa;
+        border-color: #6c757d;
+    }
+
+        body.modo-oscuro input::placeholder,
+        body.modo-oscuro textarea::placeholder {
+            color: #ced4da;
+        }

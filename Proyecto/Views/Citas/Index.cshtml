@@ -1,6 +1,47 @@
-﻿@{
+﻿@model List<Proyecto.Models.Cita>
+
+@{
     ViewData["Title"] = "Citas";
 }
 
-<h2>Gestión de Citas</h2>
-<p>Aquí puedes agendar y administrar citas médicas.</p>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">📅 Gestión de Citas</h2>
+        <a class="btn btn-primary" asp-action="Create">
+            <i class="bi bi-plus-circle"></i> Nueva Cita
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var cita in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card cita-card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title mb-1">@cita.Paciente</h5>
+                            <span class="badge @(cita.Estado == "Confirmada" ? "bg-success" : cita.Estado == "Pendiente" ? "bg-warning text-dark" : "bg-danger")">
+                                @cita.Estado
+                            </span>
+                        </div>
+                        <p class="mb-1"><strong>Doctor:</strong> @cita.Doctor</p>
+                        <p class="mb-1"><strong>Fecha:</strong> @cita.Fecha.ToString("dd/MM/yyyy")</p>
+                        <p class="mb-3"><strong>Hora:</strong> @cita.Fecha.ToString("hh:mm tt")</p>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-action="Details" asp-route-id="@cita.Id" class="btn btn-sm btn-outline-primary" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@cita.Id" class="btn btn-sm btn-outline-warning" title="Editar cita">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@cita.Id" class="btn btn-sm btn-outline-danger" title="Eliminar cita">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

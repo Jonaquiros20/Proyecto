@@ -1,5 +1,96 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Proyecto.Models.ReporteViewModel
 @{
+    ViewData["Title"] = "Reportes";
 }
+
+<div class="container py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold">📊 Reportes del Consultorio</h2>
+        <p class="text-muted">Resumen general de la actividad médica reciente</p>
+    </div>
+
+    <!-- Tarjetas resumen -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Pacientes</h5>
+                    <p class="display-6 fw-bold text-primary">@Model.TotalPacientes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Doctores</h5>
+                    <p class="display-6 fw-bold text-success">@Model.TotalDoctores</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Citas</h5>
+                    <p class="display-6 fw-bold text-warning">@Model.TotalCitas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Recetas</h5>
+                    <p class="display-6 fw-bold text-danger">@Model.TotalRecetas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de citas recientes -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">📅 Citas recientes</h5>
+            <div class="table-responsive">
+                <table class="table table-striped align-middle mt-3">
+                    <thead>
+                        <tr>
+                            <th>Paciente</th>
+                            <th>Doctor</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cita in Model.CitasRecientes)
+                        {
+                            <tr>
+                                <td>@cita.Paciente</td>
+                                <td>@cita.Doctor</td>
+                                <td>@cita.Fecha.ToString("dd/MM/yyyy")</td>
+                                <td>@cita.Fecha.ToString("hh:mm tt")</td>
+                                <td>
+                                    @if (cita.Estado == "Confirmada")
+                                    {
+                                        <span class="badge bg-success">Confirmada</span>
+                                    }
+                                    else if (cita.Estado == "Pendiente")
+                                    {
+                                        <span class="badge bg-warning text-dark">Pendiente</span>
+                                    }
+                                    else if (cita.Estado == "Cancelada")
+                                    {
+                                        <span class="badge bg-danger">Cancelada</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@cita.Estado</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

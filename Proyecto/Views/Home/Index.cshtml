@@ -9,7 +9,13 @@
     <p class="lead text-secondary">Administra pacientes, citas médicas, recetas y expedientes clínicos desde un solo lugar.</p>
 </div>
 
-<div class="row row-cols-1 row-cols-md-3 g-4 text-center">
+<!-- Buscador -->
+<div class="mb-4 text-center">
+    <input type="text" id="buscador" class="form-control w-50 mx-auto" placeholder="Buscar módulo...">
+</div>
+
+<!-- Tarjetas -->
+<div class="row row-cols-1 row-cols-md-3 g-4 text-center" id="contenedorTarjetas">
 
     <div class="col">
         <div class="card shadow-sm h-100">
@@ -98,6 +104,8 @@
 </div>
 
 @section Scripts {
+    <script src="https://unpkg.com/scrollreveal"></script>
+
     <script>
         function mostrarInfo(titulo, mensaje) {
             Swal.fire({
@@ -107,5 +115,26 @@
                 confirmButtonColor: '#0d6efd'
             });
         }
+
+        // Filtro por texto
+        document.getElementById('buscador').addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            const tarjetas = document.querySelectorAll('#contenedorTarjetas .col');
+
+            tarjetas.forEach(card => {
+                const texto = card.innerText.toLowerCase();
+                card.style.display = texto.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // ScrollReveal animación
+        ScrollReveal().reveal('.card', {
+            duration: 800,
+            origin: 'bottom',
+            distance: '40px',
+            easing: 'ease-out',
+            reset: false,
+            interval: 100
+        });
     </script>
 }
